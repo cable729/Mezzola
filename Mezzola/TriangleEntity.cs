@@ -1,19 +1,50 @@
-﻿using Mezzola.Engine.Base;
+﻿using System;
+using Mezzola.Engine.Base;
+using Mezzola.Engine.Unit;
 using Mezzola.Engine.View;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Mezzola
 {
-    public class TempSprite : DrawableEntity
+    public class TriangleCreep : TriangleEntity, IHealth, IUnit
     {
-        private readonly GraphicsDevice device;
-        private readonly Camera3D camera;
-        private readonly VertexPositionColor[] vertices;
-        private readonly BasicEffect effect;
-        private readonly VertexBuffer buffer;
+        public TriangleCreep(GraphicsDevice device, Camera3D camera, Color color) : base(device, camera, color)
+        {
+        }
 
-        public TempSprite(GraphicsDevice device, Camera3D camera, Color color)
+        public int CurrentHealth { get; set; }
+        public int MaxHealth { get; set; }
+        public float MovementSpeed { get; set; }
+        public Vector3 TargetMoveTowards { get; set; }
+
+        public void Move(float delta)
+        {
+            const float epsilon = 0.01f;
+
+            var distance = (TargetMoveTowards - Position).Length();
+            if (distance < MovementSpeed * delta && distance > epsilon)
+            {
+                Position = TargetMoveTowards;
+            }
+            else if (distance > epsilon)
+            {
+                var movementDirection = TargetMoveTowards - Position;
+                movementDirection.Normalize();
+                Position += movementDirection * MovementSpeed * delta;
+            }
+        }
+    }
+
+    public class TriangleEntity : DrawableEntity
+    {
+        private readonly VertexBuffer buffer;
+        private readonly Camera3D camera;
+        private readonly GraphicsDevice device;
+        private readonly BasicEffect effect;
+        private readonly VertexPositionColor[] vertices;
+
+        public TriangleEntity(GraphicsDevice device, Camera3D camera, Color color)
         {
             this.device = device;
             this.camera = camera;

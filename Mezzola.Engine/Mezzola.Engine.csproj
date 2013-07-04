@@ -45,8 +45,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\DrawableEntity.cs" />
     <Compile Include="Unit\IHealth.cs" />
-    <Compile Include="Unit\Unit.cs" />
-    <Compile Include="Unit\UnitCollection.cs" />
+    <Compile Include="Unit\IUnit.cs" />
     <Compile Include="View\Camera3D.cs" />
   </ItemGroup>
   <ItemGroup />

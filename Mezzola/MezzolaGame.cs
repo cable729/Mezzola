@@ -10,9 +10,10 @@ namespace Mezzola
     public class MezzolaGame : Game
     {
         private List<DrawableEntity> drawableEntities;
-        private TempSprite player;
+        private TriangleEntity player;
         private InputManager input;
         private Camera3D camera;
+        private TriangleCreep creep;
 
         public MezzolaGame()
         {
@@ -27,12 +28,14 @@ namespace Mezzola
             camera = new Camera3D(GraphicsDevice, new Vector3(0, 0, 25)) { FarClip = 50f };
             GraphicsDevice.RasterizerState.CullMode = CullMode.None;
 
-            player = new TempSprite(GraphicsDevice, camera, Color.Red) { Position = Vector3.Left * 5 };
-            drawableEntities = new List<DrawableEntity>
+            player = new TriangleEntity(GraphicsDevice, camera, Color.Red) { Position = Vector3.Left * 5 };
+            creep = new TriangleCreep(GraphicsDevice, camera, Color.Blue)
             {
-                new TempSprite(GraphicsDevice, camera, Color.Blue) { Position = Vector3.Zero },
-                player
+                Position = new Vector3(5, 10, 0),
+                MovementSpeed = 5f,
+                TargetMoveTowards = new Vector3(2, -10, 0)
             };
+            drawableEntities = new List<DrawableEntity> { creep, player };
             
             input = new InputManager(this);
             Components.Add(input);
@@ -47,6 +50,7 @@ namespace Mezzola
                 player.Position =
                     camera.TransformCoordinates(new Vector2(input.CurrentMouseState.X, input.CurrentMouseState.Y));
             }
+            creep.Move((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             base.Update(gameTime);
         }
