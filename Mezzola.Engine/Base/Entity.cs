@@ -2,8 +2,8 @@
 
 namespace Mezzola.Engine.Base
 {
-    public class Entity
+    public interface IEntity
     {
-        public Vector3 Position { get; set; }
+        Vector3 Position { get; set; }
     }
 }

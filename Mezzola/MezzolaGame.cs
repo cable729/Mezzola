@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Mezzola.Engine.Base;
-using Mezzola.Engine.Unit;
+using Mezzola.Engine.Input;
+using Mezzola.Engine.View;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -9,19 +10,21 @@ namespace Mezzola
     class TempSprite : DrawableEntity
     {
         private readonly GraphicsDevice device;
+        private readonly Camera3D camera;
         private readonly VertexPositionColor[] vertices;
         private readonly BasicEffect effect;
         private readonly VertexBuffer buffer;
 
-        public TempSprite(GraphicsDevice device, Color color)
+        public TempSprite(GraphicsDevice device, Camera3D camera, Color color)
         {
             this.device = device;
+            this.camera = camera;
             // Declared in counter-clockwise format.
             this.vertices = new[]
             {
-                new VertexPositionColor(new Vector3(0.0f, 1.0f, 0.0f), color),
+                new VertexPositionColor(new Vector3(1.0f, -1.0f, 0.0f), color),
                 new VertexPositionColor(new Vector3(-1.0f, -1.0f, 0.0f), color),
-                new VertexPositionColor(new Vector3(1.0f, -1.0f, 0.0f), color)
+                new VertexPositionColor(new Vector3(0.0f, 1.0f, 0.0f), color)
             };
             this.effect = new BasicEffect(device);
             this.buffer = new VertexBuffer(device, VertexPositionColor.VertexDeclaration, 3,
@@ -31,13 +34,9 @@ namespace Mezzola
 
         public override void Draw()
         {
-            // Projection defines how far to the left, right, close, and far to render.
-            this.effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
-                device.Viewport.AspectRatio, 0.001f, 1000.0f);
-            // View defines which way is forward, left, right, up, down, etc.
-            this.effect.View = Matrix.CreateLookAt(new Vector3(0, 0, -50), Vector3.Down, Vector3.Forward);
-            // World shifts the actual object.
-            this.effect.World = Matrix.CreateTranslation(Position);
+            effect.Projection = camera.Projection;
+            effect.View = camera.View;
+            effect.World = camera.GetWorldMatrix(this);
             this.effect.VertexColorEnabled = true;
 
             foreach (var pass in this.effect.CurrentTechnique.Passes)
@@ -52,6 +51,9 @@ namespace Mezzola
     public class MezzolaGame : Game
     {
         private List<DrawableEntity> drawableEntities;
+        private TempSprite player;
+        private InputManager input;
+        private Camera3D camera;
 
         public MezzolaGame()
         {
@@ -61,23 +63,40 @@ namespace Mezzola
 
         protected override void Initialize()
         {
+            camera = new Camera3D(GraphicsDevice) { Position = new Vector3(0, 0, 50) };
+
+            player = new TempSprite(GraphicsDevice, camera, Color.Red) { Position = Vector3.Left * 5 };
             drawableEntities = new List<DrawableEntity>
             {
-                new TempSprite(GraphicsDevice, Color.Blue) { Position = Vector3.Zero },
-                new TempSprite(GraphicsDevice, Color.Red) { Position = Vector3.Left * 5 }
+                new TempSprite(GraphicsDevice, camera, Color.Blue) { Position = Vector3.Zero },
+                player
             };
+            GraphicsDevice.RasterizerState.CullMode = CullMode.None;
+            
+            input = new InputManager(this);
+            Components.Add(input);
 
             base.Initialize();
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            if (input.RightMouseButtonJustPressed)
+            {
+                var clickPosition = new Vector3(input.CurrentMouseState.X, input.CurrentMouseState.Y, 1);
+                var moveTo = GraphicsDevice.Viewport.Unproject(clickPosition, camera.Projection, camera.View,
+                    Matrix.Identity);
+                player.Position = new Vector3(moveTo.X, moveTo.Y, 0);
+            }
+
+            base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
 
-            foreach (var d in drawableEntities)
-            {
-                d.Draw();
-            }
+            foreach (var d in drawableEntities) d.Draw();
 
             base.Draw(gameTime);
         }
