@@ -35,7 +35,7 @@ namespace Mezzola
             this.effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                 device.Viewport.AspectRatio, 0.001f, 1000.0f);
             // View defines which way is forward, left, right, up, down, etc.
-            this.effect.View = Matrix.CreateLookAt(new Vector3(0, 0, -5), Vector3.Forward, Vector3.Up);
+            this.effect.View = Matrix.CreateLookAt(new Vector3(0, 0, -25), Vector3.Down, Vector3.Forward);
             // World shifts the actual object.
             this.effect.World = Matrix.CreateTranslation(Position);
             this.effect.VertexColorEnabled = true;
@@ -63,8 +63,8 @@ namespace Mezzola
         {
             drawableEntities = new List<DrawableEntity>
             {
-                new TempSprite(GraphicsDevice, Color.Blue) { Position = Vector3.Right * 10 + Vector3.Backward * 20 },
-                new TempSprite(GraphicsDevice, Color.Red) { Position = Vector3.Left * 5 + Vector3.Backward * 20 }
+                new TempSprite(GraphicsDevice, Color.Blue) { Position = Vector3.Zero },
+                new TempSprite(GraphicsDevice, Color.Red) { Position = Vector3.Left * 5 }
             };
 
             base.Initialize();
