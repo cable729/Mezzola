@@ -42,6 +42,7 @@
     <Compile Include="MezzolaGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TempSprite.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="OpenTK">
