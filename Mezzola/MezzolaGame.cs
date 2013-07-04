@@ -1,14 +1,57 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using Mezzola.Engine.Base;
+using Mezzola.Engine.Unit;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Mezzola
 {
+    class TempSprite : DrawableEntity
+    {
+        private readonly GraphicsDevice device;
+        private readonly VertexPositionColor[] vertices;
+        private readonly BasicEffect effect;
+        private readonly VertexBuffer buffer;
+
+        public TempSprite(GraphicsDevice device, Color color)
+        {
+            this.device = device;
+            // Declared in clockwise format.
+            this.vertices = new[]
+            {
+                new VertexPositionColor(new Vector3(0.0f, 1.0f, 0.0f), color),
+                new VertexPositionColor(new Vector3(-1.0f, -1.0f, 0.0f), color),
+                new VertexPositionColor(new Vector3(1.0f, -1.0f, 0.0f), color)
+            };
+            this.effect = new BasicEffect(device);
+            this.buffer = new VertexBuffer(device, VertexPositionColor.VertexDeclaration, 3,
+                BufferUsage.WriteOnly);
+            this.buffer.SetData(this.vertices);
+        }
+
+        public override void Draw()
+        {
+            // Projection defines how far to the left, right, close, and far to render.
+            this.effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
+                device.Viewport.AspectRatio, 0.001f, 1000.0f);
+            // View defines which way is forward, left, right, up, down, etc.
+            this.effect.View = Matrix.CreateLookAt(new Vector3(0, 0, -5), Vector3.Forward, Vector3.Up);
+            // World shifts the actual object.
+            this.effect.World = Matrix.CreateTranslation(Position);
+            this.effect.VertexColorEnabled = true;
+
+            foreach (var pass in this.effect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+
+                device.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, 1);
+            }
+        }
+    }
+
     public class MezzolaGame : Game
     {
-        private VertexBuffer buffer;
-        private BasicEffect effect;
-        private VertexPositionColor[] vertices;
-        private float rotationY;
+        private List<DrawableEntity> drawableEntities;
 
         public MezzolaGame()
         {
@@ -18,42 +61,22 @@ namespace Mezzola
 
         protected override void Initialize()
         {
-            this.vertices = new[]
+            drawableEntities = new List<DrawableEntity>
             {
-                new VertexPositionColor(new Vector3(0.0f, 1.0f, 0.0f), Color.Red),
-                new VertexPositionColor(new Vector3(-1.0f, -1.0f, 0.0f), Color.Blue),
-                new VertexPositionColor(new Vector3(1.0f, -1.0f, 0.0f), Color.Green)
+                new TempSprite(GraphicsDevice, Color.Blue) { Position = Vector3.Right * 10 + Vector3.Backward * 20 },
+                new TempSprite(GraphicsDevice, Color.Red) { Position = Vector3.Left * 5 + Vector3.Backward * 20 }
             };
-            this.effect = new BasicEffect(GraphicsDevice);
-            this.buffer = new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, 3,
-                BufferUsage.WriteOnly);
-            this.buffer.SetData(this.vertices);
 
             base.Initialize();
         }
 
-        protected override void Update(GameTime gameTime)
-        {
-            rotationY += (float) gameTime.ElapsedGameTime.TotalSeconds;
-
-            base.Update(gameTime);
-        }
-
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            this.effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
-                GraphicsDevice.Viewport.AspectRatio, 0.001f, 1000.0f);
-            this.effect.View = Matrix.CreateLookAt(new Vector3(0, 0, -5), Vector3.Forward, Vector3.Up);
-            this.effect.World = Matrix.CreateRotationY(rotationY);
-            this.effect.VertexColorEnabled = true;
-
-            foreach (var pass in this.effect.CurrentTechnique.Passes)
+            foreach (var d in drawableEntities)
             {
-                pass.Apply();
-
-                GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, vertices, 0, 1);
+                d.Draw();
             }
 
             base.Draw(gameTime);
