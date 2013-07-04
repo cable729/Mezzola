@@ -16,7 +16,7 @@ namespace Mezzola
         public TempSprite(GraphicsDevice device, Color color)
         {
             this.device = device;
-            // Declared in clockwise format.
+            // Declared in counter-clockwise format.
             this.vertices = new[]
             {
                 new VertexPositionColor(new Vector3(0.0f, 1.0f, 0.0f), color),
@@ -35,7 +35,7 @@ namespace Mezzola
             this.effect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.PiOver4,
                 device.Viewport.AspectRatio, 0.001f, 1000.0f);
             // View defines which way is forward, left, right, up, down, etc.
-            this.effect.View = Matrix.CreateLookAt(new Vector3(0, 0, -25), Vector3.Down, Vector3.Forward);
+            this.effect.View = Matrix.CreateLookAt(new Vector3(0, 0, -50), Vector3.Down, Vector3.Forward);
             // World shifts the actual object.
             this.effect.World = Matrix.CreateTranslation(Position);
             this.effect.VertexColorEnabled = true;
