@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
 
 namespace Mezzola.Engine.Base
 {
-    public interface IEntity
+    public class Entity
     {
-        Vector3 Position { get; set; }
+        public List<object> Components = new List<object>();
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System;
-using Mezzola.Engine.Base;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Mezzola.Engine.View
 {
-    public class Camera3D : IEntity
+    public class Camera3D
     {
         private readonly GraphicsDevice device;
         private Vector3 position;
@@ -41,9 +40,9 @@ namespace Mezzola.Engine.View
             Position = position;
         }
 
-        public Matrix GetWorldMatrix(IEntity entity)
+        public Matrix GetWorldMatrix(Vector3 position)
         {
-            return Matrix.CreateTranslation(entity.Position);
+            return Matrix.CreateTranslation(position);
         }
 
         public Vector3 TransformCoordinates(Vector2 coordinate)

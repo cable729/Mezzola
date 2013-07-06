@@ -1,5 +1,4 @@
-﻿using System;
-using Mezzola.Engine.Base;
+﻿using Mezzola.Engine.Base;
 using Mezzola.Engine.Unit;
 using Mezzola.Engine.View;
 using Microsoft.Xna.Framework;
@@ -7,7 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Mezzola
 {
-    public class TriangleCreep : TriangleEntity, IHealth, IUnit
+    public class TriangleCreep : DrawableTriangle, IHealth, IUnit
     {
         public TriangleCreep(GraphicsDevice device, Camera3D camera, Color color) : base(device, camera, color)
         {
@@ -36,15 +35,14 @@ namespace Mezzola
         }
     }
 
-    public class TriangleEntity : DrawableEntity
+    public class DrawableTriangle : DrawableEntity
     {
-        private readonly VertexBuffer buffer;
         private readonly Camera3D camera;
         private readonly GraphicsDevice device;
         private readonly BasicEffect effect;
         private readonly VertexPositionColor[] vertices;
 
-        public TriangleEntity(GraphicsDevice device, Camera3D camera, Color color)
+        public DrawableTriangle(GraphicsDevice device, Camera3D camera, Color color)
         {
             this.device = device;
             this.camera = camera;
@@ -58,10 +56,6 @@ namespace Mezzola
             };
 
             this.effect = new BasicEffect(device);
-
-            this.buffer = new VertexBuffer(device, VertexPositionColor.VertexDeclaration, 3,
-                BufferUsage.WriteOnly);
-            this.buffer.SetData(this.vertices);
         }
 
         public override void Draw()
@@ -76,6 +70,7 @@ namespace Mezzola
                 pass.Apply();
 
                 this.device.DrawUserPrimitives(PrimitiveType.TriangleList, this.vertices, 0, 1);
+                
             }
         }
     }
