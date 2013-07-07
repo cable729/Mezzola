@@ -39,6 +39,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Camera3D.cs" />
     <Compile Include="MezzolaGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,23 +65,24 @@
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\" />
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mezzola.Engine\Mezzola.Engine.csproj">
-      <Project>{e6a9c225-3f12-44bf-a2b0-ab0afb8a6a8a}</Project>
-      <Name>Mezzola.Engine</Name>
+    <Content Include="..\Mezzola.Content\Mezzola.Content\bin\PSM\Content\**">
+      <Link>Content\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <!--<Content Include="..\Mezzola.Content\Mezzola.Content\bin\PSM\Content\**">
+      <Link>Content\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>-->
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Artemis_XNA_INDEPENDENT\Artemis.csproj">
+      <Project>{22c89af2-e1cf-4976-91b9-7d33773dc6e7}</Project>
+      <Name>Artemis</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
