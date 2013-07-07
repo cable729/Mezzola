@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>Artemis</id>
+    <version>1.2.2</version>
+    <title>Entity System Artemis for Games</title>
+    <authors>Thiago Dias Pastor and Alisson Cavalcante Agiani</authors>
+    <owners>Thiago Dias Pastor and Alisson Cavalcante Agiani</owners>
+    <licenseUrl>https://github.com/thelinuxlich/artemis_CSharp/blob/master/LICENSE.txt</licenseUrl>
+    <projectUrl>http://thelinuxlich.github.com/artemis_CSharp/</projectUrl>
+    <iconUrl>http://gamadu.com/artemis/icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Born as a port of the awesome Entity System framework Artemis (Java - http://gamadu.com/). Now it is a full featured, high performance plataform for building games based on Entity System paradigm.</description>
+    <summary>Entity Systems offer an architectural approach to object design that fits well with games, where requirements and behaviours need to be tweaked or swapped out constantly.</summary>
+    <releaseNotes>The main Changes on this version are:
+
+--Added new Types of Systems. Check http://thelinuxlich.github.io/artemis_CSharp/ for more info
+--Unique ID of entities can be set (not automatically generated anymore)
+--Improved Multithreading Support</releaseNotes>
+    <copyright>Copyright © 2013 Pastor/Agiani, All rights reserved</copyright>
+    <language>pt-BR</language>
+    <tags>entity system games framework Artemis C# gamedev game development ploobs</tags>
+  </metadata>
+</package>

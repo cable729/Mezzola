@@ -39,6 +39,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Camera3D.cs" />
     <Compile Include="MezzolaGame.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,15 +64,9 @@
   <ItemGroup>
     <Content Include="Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\Mezzola.Engine\Mezzola.Engine.csproj">
-      <Project>{e6a9c225-3f12-44bf-a2b0-ab0afb8a6a8a}</Project>
-      <Name>Mezzola.Engine</Name>
-    </ProjectReference>
-  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Mezzola.Content\Mezzola.Content\bin\PSM\Content\**">
@@ -82,6 +77,12 @@
       <Link>Content\%(RecursiveDir)%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>-->
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Artemis_XNA_INDEPENDENT\Artemis.csproj">
+      <Project>{22c89af2-e1cf-4976-91b9-7d33773dc6e7}</Project>
+      <Name>Artemis</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
