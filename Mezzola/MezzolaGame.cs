@@ -43,10 +43,19 @@ namespace Mezzola
 
             world.InitializeAll(true);
 
-            var e = world.CreateEntity();
-            e.AddComponent(new TriangleComponent(Color.Red));
-            e.AddComponent(new PositionComponent {Position = new Vector3(0, 0, 0)});
-            e.AddComponent(new MovementComponent { MovementSpeed = 6f });
+            var player = world.CreateEntity();
+            player.AddComponent(new TriangleComponent(Color.Red));
+            player.AddComponent(new PositionComponent {Position = new Vector3(0, 0, 0)});
+            player.AddComponent(new MovementComponent { MovementSpeed = 6f });
+            player.AddComponent(new PlayerInputComponent());
+
+            var computer = world.CreateEntity();
+            computer.AddComponent(new TriangleComponent(Color.Blue));
+            computer.AddComponent(new PositionComponent { Position = new Vector3(4, -4, 0) });
+            
+            var computer2 = world.CreateEntity();
+            computer2.AddComponent(new TriangleComponent(Color.Green));
+            computer2.AddComponent(new PositionComponent { Position = new Vector3(4, 4, 0) });
 
             base.LoadContent();
         }

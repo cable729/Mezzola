@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\MovementComponent.cs" />
+    <Compile Include="Components\PlayerInputComponent.cs" />
     <Compile Include="Components\PositionComponent.cs" />
     <Compile Include="Components\TriangleComponent.cs" />
     <Compile Include="Extensions\Artemis.cs" />

@@ -16,7 +16,7 @@ namespace Mezzola.Engine.Systems
         private readonly Camera3D camera;
 
         public InputForMoveSystem()
-            : base(Aspect.All(typeof (MovementComponent)))
+            : base(Aspect.All(typeof (MovementComponent), typeof(PlayerInputComponent)))
         {
             input = BlackBoard.GetEntry<InputManager>("Input");
             camera = BlackBoard.GetEntry<Camera3D>("Camera");
