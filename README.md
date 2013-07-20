@@ -12,8 +12,7 @@ We also have a features and releases timeline on [Trello](https://trello.com/boa
 
 #How to Install Monogame + XNA
 
-1. Install Games for Windows Live
-2. Install XNA Game Studio 4.0
-3. Install Windows Phone Tools 7.1
-4. Follow instructions given in this [StackOverflow answer](http://stackoverflow.com/questions/10881005/how-to-install-xna-game-studio-on-visual-studio-2012#answer-10881007).
-5. Restart computer
+1. Install [Games for Windows Live](http://www.xbox.com/en-US/live/pc/downloadclient)
+2. Install [Windows Phone Tools 7.1](http://www.microsoft.com/en-us/download/details.aspx?displaylang=en&id=27570), which contains XNA 4.0.
+3. Follow instructions given in this [StackOverflow answer](http://stackoverflow.com/questions/10881005/how-to-install-xna-game-studio-on-visual-studio-2012#answer-10881007).
+4. Restart computer
