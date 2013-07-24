@@ -16,4 +16,3 @@ We also have a features and releases timeline on [Trello](https://trello.com/boa
 2. Install [Windows Phone Tools 7.1](http://www.microsoft.com/en-us/download/details.aspx?displaylang=en&id=27570), which contains XNA 4.0.
 3. Follow instructions given in this [StackOverflow answer](http://stackoverflow.com/questions/10881005/how-to-install-xna-game-studio-on-visual-studio-2012#answer-10881007).
 4. Install [MonoGame 3.0](http://www.monogame.net/downloads)
-5. Restart computer
